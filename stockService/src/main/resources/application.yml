@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: stock-service
+  config:
+    import: optional:configserver:http://localhost:8081/configServer
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: sys as sysdba
+    driver-class-name: oracle.jdbc.OracleDriver
+    password: oracle
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dilect: org.hibernate.dialect.Oracle12cDialect
+    show-sql: true
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
+      group-id: order-consumer-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: '*'
+        
+    
+
+server:
+  port: 8083
+
+eureka:
+  instance:
+    hostname: localhost
+logging:
+  file:
+    name: E:\CentralLogging\mskafka.log
+    
+topicName1: order-topic
+

@@ -1,0 +1,32 @@
+spring:
+  application:
+    name:  order-service
+  config:
+    import: optional:configserver:http://localhost:8081/configServer
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: sys as sysdba
+    driver-class-name: oracle.jdbc.OracleDriver
+    password: oracle
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dilect: org.hibernate.dialect.Oracle12cDialect
+    show-sql: true
+       
+server:
+  port: 8082
+eureka:
+  instance:
+    hostname: localhost
+    
+topicName1: order-topic
+
+
